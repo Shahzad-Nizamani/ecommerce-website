@@ -8,18 +8,34 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="/">ShopSphere</a>
-    <nav class="nav-links">
-      <a href="/">Home</a>
-      <a class="active" href="/products">Shop</a>
-    </nav>
+    <div class="top-row">
+      <a class="brand" href="/">ShopSphere</a>
+      <form class="search-wrap" action="/products" method="get">
+        <input type="text" name="q" placeholder="Search products" aria-label="Search products" />
+        <button type="submit" class="btn">Search</button>
+      </form>
+      <div class="quick-actions">
+        <a href="/">Profile</a>
+        <a href="/products">Orders</a>
+        <a href="/products">My cart</a>
+      </div>
+    </div>
+    <div class="sub-row">
+      <nav class="nav-links">
+        <a href="/">Home</a>
+        <a class="active" href="/products">Products</a>
+        <a href="/products">Gift boxes</a>
+        <a href="/products">Projects</a>
+      </nav>
+      <p class="shipping">English, USD</p>
+    </div>
   </header>
 
   <main class="container">
     <section class="hero">
-      <p class="eyebrow">Catalog</p>
-      <h1>Product Listing</h1>
-      <p>Every product card is rendered through FastAPI template routes with static CSS and JS assets.</p>
+      <p class="eyebrow">Category</p>
+      <h1>Consumer electronics</h1>
+      <p>Explore products with a layout aligned to the reference ecommerce design and served as static templates from FastAPI.</p>
     </section>
 
     <section>

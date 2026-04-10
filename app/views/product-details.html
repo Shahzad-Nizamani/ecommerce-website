@@ -8,11 +8,25 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="/">ShopSphere</a>
-    <nav class="nav-links">
-      <a href="/">Home</a>
-      <a class="active" href="/products">Shop</a>
-    </nav>
+    <div class="top-row">
+      <a class="brand" href="/">ShopSphere</a>
+      <form class="search-wrap" action="/products" method="get">
+        <input type="text" name="q" placeholder="Search products" aria-label="Search products" />
+        <button type="submit" class="btn">Search</button>
+      </form>
+      <div class="quick-actions">
+        <a href="/">Profile</a>
+        <a href="/products">Orders</a>
+        <a href="/products">My cart</a>
+      </div>
+    </div>
+    <div class="sub-row">
+      <nav class="nav-links">
+        <a href="/">Home</a>
+        <a class="active" href="/products">Products</a>
+      </nav>
+      <p class="shipping">Ship to: Global</p>
+    </div>
   </header>
 
   <main class="container">
@@ -22,7 +36,7 @@
         <p class="chip">{{ product.category }}</p>
         <h1>{{ product.name }}</h1>
         <p class="detail-copy">{{ product.description }}</p>
-        <p class="price">Price: ${{ "%.2f"|format(product.price) }}</p>
+        <p class="price">From USD ${{ "%.2f"|format(product.price) }}</p>
         <div class="hero-actions">
           <a class="btn" href="/products">Back to Products</a>
           <a class="btn btn-ghost" href="/">Continue Shopping</a>

@@ -8,34 +8,66 @@
 </head>
 <body>
   <header class="site-header">
-    <a class="brand" href="/">ShopSphere</a>
-    <nav class="nav-links">
-      <a class="active" href="/">Home</a>
-      <a href="/products">Shop</a>
-    </nav>
+    <div class="top-row">
+      <a class="brand" href="/">ShopSphere</a>
+      <form class="search-wrap" action="/products" method="get">
+        <input type="text" name="q" placeholder="Search products" aria-label="Search products" />
+        <button type="submit" class="btn">Search</button>
+      </form>
+      <div class="quick-actions">
+        <a href="/">Profile</a>
+        <a href="/products">Orders</a>
+        <a href="/products">My cart</a>
+      </div>
+    </div>
+    <div class="sub-row">
+      <nav class="nav-links">
+        <a class="active" href="/">Home</a>
+        <a href="/products">Hot offers</a>
+        <a href="/products">Gift boxes</a>
+        <a href="/products">Projects</a>
+      </nav>
+      <p class="shipping">Ship to: Global</p>
+    </div>
   </header>
 
   <main class="container">
     <section class="hero hero-home">
       <div class="hero-content">
-        <p class="eyebrow">Spring Collection 2026</p>
-        <h1>Style that moves with your day</h1>
-        <p class="hero-copy">Discover curated essentials with bold silhouettes, functional details, and premium comfort. Every page is served as static HTML through FastAPI routes.</p>
+        <p class="eyebrow">Latest trending</p>
+        <h1>Electronic items</h1>
+        <p class="hero-copy">Browse trending categories and featured products. These templates are served directly from FastAPI routes for easy integration into your ecommerce website.</p>
         <div class="hero-actions">
-          <a class="btn" href="/products">Explore Products</a>
-          <a class="btn btn-ghost" href="/products/1">View Best Seller</a>
+          <a class="btn" href="/products">Learn more</a>
+          <a class="btn btn-ghost" href="/products/1">View deal</a>
         </div>
       </div>
       <div class="hero-stat-block">
-        <p class="meta-label">Available Products</p>
+        <p class="meta-label">Available products</p>
         <p class="stat-value">{{ products_count }}</p>
-        <p class="meta-label">Fast delivery across all cities</p>
+        <p class="meta-label">Join now for special supplier deals</p>
+      </div>
+    </section>
+
+    <section class="deal-strip">
+      <div class="deal-copy">
+        <h3>Deals and offers</h3>
+        <p>Hygiene equipments</p>
+      </div>
+      <div class="deal-grid">
+        {% for item in featured %}
+        <article class="deal-card">
+          <img src="{{ item.image }}" alt="{{ item.name }}" />
+          <p>{{ item.name }}</p>
+          <span>-25%</span>
+        </article>
+        {% endfor %}
       </div>
     </section>
 
     <section class="section-head">
-      <h2>Featured Picks</h2>
-      <a class="text-link" href="/products">See all products</a>
+      <h2>Recommended items</h2>
+      <a class="text-link" href="/products">Source now</a>
     </section>
 
     <section>
