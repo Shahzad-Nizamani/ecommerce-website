@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShopSphere | Products</title>
+  <link rel="stylesheet" href="/public/css/styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/">ShopSphere</a>
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a class="active" href="/products">Shop</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <p class="eyebrow">Catalog</p>
+      <h1>Product Listing</h1>
+      <p>Every product card is rendered through FastAPI template routes with static CSS and JS assets.</p>
+    </section>
+
+    <section>
+      <div class="grid product-grid">
+        {% for item in products %}
+        <article class="card">
+          <img src="{{ item.image }}" alt="{{ item.name }}" />
+          <div class="card-content">
+            <p class="chip">{{ item.category }}</p>
+            <h3>{{ item.name }}</h3>
+            <p class="price">${{ "%.2f"|format(item.price) }}</p>
+            <a class="btn" href="/products/{{ item.id }}">Open Product</a>
+          </div>
+        </article>
+        {% endfor %}
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">Built for desktop and mobile consistency</footer>
+  <script src="/public/js/main.js"></script>
+</body>
+</html>

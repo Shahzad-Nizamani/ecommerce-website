@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Sling bag">
+  <rect width="800" height="500" fill="#f8fafc"/>
+  <path d="M260 240 C280 170, 520 170, 540 240" stroke="#475569" stroke-width="24" fill="none"/>
+  <rect x="210" y="220" width="380" height="210" rx="28" fill="#0ea5e9"/>
+  <rect x="250" y="260" width="300" height="120" rx="22" fill="#0284c7"/>
+  <rect x="355" y="210" width="90" height="28" rx="10" fill="#475569"/>
+</svg>

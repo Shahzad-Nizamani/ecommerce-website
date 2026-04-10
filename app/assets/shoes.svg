@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Running shoes">
+  <rect width="800" height="500" fill="#f8fafc"/>
+  <path d="M120 310 C220 270, 330 260, 430 300 C500 325, 590 330, 690 320 L720 360 L120 360 Z" fill="#fb923c"/>
+  <path d="M175 318 C300 292, 430 292, 570 330" stroke="#7c2d12" stroke-width="12" fill="none"/>
+  <circle cx="250" cy="342" r="10" fill="#fff"/>
+  <circle cx="320" cy="338" r="10" fill="#fff"/>
+  <circle cx="390" cy="336" r="10" fill="#fff"/>
+</svg>
