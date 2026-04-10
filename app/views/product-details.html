@@ -30,18 +30,195 @@
   </header>
 
   <main class="container">
-    <section class="detail-layout">
-      <img src="{{ product.image }}" alt="{{ product.name }}" />
-      <div class="detail-content">
-        <p class="chip">{{ product.category }}</p>
-        <h1>{{ product.name }}</h1>
-        <p class="detail-copy">{{ product.description }}</p>
-        <p class="price">From USD ${{ "%.2f"|format(product.price) }}</p>
-        <div class="hero-actions">
-          <a class="btn" href="/products">Back to Products</a>
-          <a class="btn btn-ghost" href="/">Continue Shopping</a>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span>/</span>
+      <a href="/products">Products</a>
+      <span>/</span>
+      <a href="/products">{{ product.category }}</a>
+      <span>/</span>
+      <strong>{{ product.name }}</strong>
+    </nav>
+
+    <section class="market-detail-card">
+      <div class="gallery-panel">
+        <div class="gallery-stage">
+          <img id="mainProductImage" src="{{ gallery[0] }}" alt="{{ product.name }}" />
+        </div>
+        <div class="thumb-strip">
+          {% for image in gallery %}
+          <button
+            class="thumb-button{% if loop.first %} is-active{% endif %}"
+            type="button"
+            data-gallery-thumb
+            data-image="{{ image }}"
+            data-alt="{{ product.name }} image {{ loop.index }}"
+            aria-label="Show product image {{ loop.index }}"
+          >
+            <img src="{{ image }}" alt="{{ product.name }} thumbnail {{ loop.index }}" />
+          </button>
+          {% endfor %}
         </div>
       </div>
+
+      <div class="detail-main">
+        <p class="availability">{{ product.stock_label }}</p>
+        <h1>{{ product.name }}</h1>
+
+        <div class="detail-stats">
+          <div class="rating-group" aria-label="Product rating {{ product.rating }}">
+            <span class="stars">
+              {% for _ in range(5) %}
+              <span class="star">&#9733;</span>
+              {% endfor %}
+            </span>
+            <span class="rating-value">{{ "%.1f"|format(product.rating) }}</span>
+          </div>
+          <span>{{ product.reviews }} reviews</span>
+          <span>{{ product.orders }} sold</span>
+        </div>
+
+        <div class="tier-pricing">
+          {% for tier in product.price_tiers %}
+          <div class="tier-block{% if tier.accent %} tier-block-accent{% endif %}">
+            <strong>${{ "%.2f"|format(tier.amount) }}</strong>
+            <span>{{ tier.label }}</span>
+          </div>
+          {% endfor %}
+        </div>
+
+        <div class="meta-grid">
+          <div class="meta-row">
+            <span>Price:</span>
+            <strong>Negotiable</strong>
+          </div>
+          <div class="meta-row">
+            <span>Type:</span>
+            <strong>{{ product.category }}</strong>
+          </div>
+          <div class="meta-row">
+            <span>Material:</span>
+            <strong>{{ product.material }}</strong>
+          </div>
+          <div class="meta-row">
+            <span>Design:</span>
+            <strong>{{ product.design }}</strong>
+          </div>
+        </div>
+
+        <p class="detail-copy">{{ product.description }}</p>
+
+        <div class="size-row">
+          <span>Size:</span>
+          <div class="size-options">
+            {% for size in product.sizes %}
+            <button type="button" class="size-pill{% if loop.first %} is-selected{% endif %}">{{ size }}</button>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="detail-actions">
+          <a class="btn detail-btn" href="/products">Buy Now</a>
+          <a class="btn btn-ghost detail-btn" href="/products">Add to Cart</a>
+          <button type="button" class="icon-btn" aria-label="Save for later">&#9825;</button>
+        </div>
+      </div>
+
+      <aside class="seller-card">
+        <div class="seller-head">
+          <div class="seller-mark">{{ product.seller_initial }}</div>
+          <div>
+            <p>Supplier</p>
+            <strong>{{ product.supplier }}</strong>
+          </div>
+        </div>
+        <div class="seller-meta">
+          <span>{{ product.location }}</span>
+          <span>Verified Seller</span>
+          <span>{{ product.shipping }}</span>
+        </div>
+        <div class="seller-actions">
+          <a class="btn" href="/products">Send inquiry</a>
+          <a class="btn btn-ghost" href="/products">Seller profile</a>
+        </div>
+        <button type="button" class="save-link">Save for later</button>
+      </aside>
+    </section>
+
+    <section class="detail-lower-grid">
+      <div class="description-card">
+        <div class="tab-strip">
+          <button type="button" class="tab-btn is-active">Description</button>
+          <button type="button" class="tab-btn">Reviews</button>
+          <button type="button" class="tab-btn">Shipping</button>
+          <button type="button" class="tab-btn">About company</button>
+        </div>
+        <div class="description-body">
+          <p class="detail-copy">{{ product.description }} Built to echo the same marketplace feel as your reference design, this page now highlights pricing tiers, seller trust cues, and product specifications in a richer layout.</p>
+
+          <table class="spec-table">
+            <tbody>
+              {% for spec in product.specs %}
+              <tr>
+                <td>{{ spec.label }}</td>
+                <td>{{ spec.value }}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+
+          <div class="feature-list">
+            {% for feature in product.features %}
+            <div class="feature-item">
+              <span>&#10003;</span>
+              <p>{{ feature }}</p>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <aside class="similar-card">
+        <h2>You may like</h2>
+        <div class="similar-list">
+          {% for item in similar_products %}
+          <a class="similar-item" href="/products/{{ item.id }}">
+            <div class="similar-thumb">
+              <img src="{{ item.image }}" alt="{{ item.name }}" />
+            </div>
+            <div>
+              <strong>{{ item.name }}</strong>
+              <span>{{ item.price_range }}</span>
+            </div>
+          </a>
+          {% endfor %}
+        </div>
+      </aside>
+    </section>
+
+    <section class="related-card">
+      <div class="section-head related-head">
+        <h2>Related products</h2>
+      </div>
+      <div class="related-grid">
+        {% for item in related_products %}
+        <a class="related-item" href="/products/{{ item.id }}">
+          <div class="related-thumb">
+            <img src="{{ item.image }}" alt="{{ item.name }}" />
+          </div>
+          <strong>{{ item.name }}</strong>
+          <span>{{ item.price_range }}</span>
+        </a>
+        {% endfor %}
+      </div>
+    </section>
+
+    <section class="discount-banner">
+      <div>
+        <h2>Super discount on orders above 100 USD</h2>
+        <p>Bulk pricing, global shipping, and supplier messaging all in one place.</p>
+      </div>
+      <a class="banner-btn" href="/products">Shop now</a>
     </section>
   </main>
 

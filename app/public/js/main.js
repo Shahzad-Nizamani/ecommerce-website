@@ -15,4 +15,20 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     );
   });
+
+  const mainProductImage = document.querySelector("#mainProductImage");
+  const thumbs = document.querySelectorAll("[data-gallery-thumb]");
+
+  thumbs.forEach((thumb) => {
+    thumb.addEventListener("click", () => {
+      if (!mainProductImage) {
+        return;
+      }
+
+      thumbs.forEach((item) => item.classList.remove("is-active"));
+      thumb.classList.add("is-active");
+      mainProductImage.src = thumb.dataset.image || mainProductImage.src;
+      mainProductImage.alt = thumb.dataset.alt || mainProductImage.alt;
+    });
+  });
 });

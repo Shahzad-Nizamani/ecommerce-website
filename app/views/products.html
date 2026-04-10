@@ -9,49 +9,223 @@
 <body>
   <header class="site-header">
     <div class="top-row">
-      <a class="brand" href="/">ShopSphere</a>
+      <a class="brand" href="/">Brand</a>
       <form class="search-wrap" action="/products" method="get">
-        <input type="text" name="q" placeholder="Search products" aria-label="Search products" />
+        <input type="text" name="q" value="{{ query }}" placeholder="Search" aria-label="Search products" />
         <button type="submit" class="btn">Search</button>
       </form>
       <div class="quick-actions">
+        <a class="ghost-action" href="/products">Add Product</a>
         <a href="/">Profile</a>
+        <a href="/products">Message</a>
         <a href="/products">Orders</a>
         <a href="/products">My cart</a>
       </div>
     </div>
     <div class="sub-row">
       <nav class="nav-links">
-        <a href="/">Home</a>
-        <a class="active" href="/products">Products</a>
+        <a href="/products">All category</a>
+        <a href="/products">Hot offers</a>
         <a href="/products">Gift boxes</a>
         <a href="/products">Projects</a>
+        <a href="/products">Menu item</a>
+        <a href="/products">Help</a>
       </nav>
-      <p class="shipping">English, USD</p>
+      <p class="shipping">English, USD | Ship to Germany</p>
     </div>
   </header>
 
   <main class="container">
-    <section class="hero">
-      <p class="eyebrow">Category</p>
-      <h1>Consumer electronics</h1>
-      <p>Explore products with a layout aligned to the reference ecommerce design and served as static templates from FastAPI.</p>
-    </section>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="/">Home</a>
+      <span>/</span>
+      <a href="/products">Clothings</a>
+      <span>/</span>
+      <a href="/products">Men's wear</a>
+      <span>/</span>
+      <strong>Summer clothing</strong>
+    </nav>
 
-    <section>
-      <div class="grid product-grid">
-        {% for item in products %}
-        <article class="card">
-          <img src="{{ item.image }}" alt="{{ item.name }}" />
-          <div class="card-content">
-            <p class="chip">{{ item.category }}</p>
-            <h3>{{ item.name }}</h3>
-            <p class="price">${{ "%.2f"|format(item.price) }}</p>
-            <a class="btn" href="/products/{{ item.id }}">Open Product</a>
+    <section class="listing-layout">
+      <aside class="filters-sidebar">
+        <div class="filter-block">
+          <div class="filter-title-row">
+            <h3>Category</h3>
+            <span>&#709;</span>
           </div>
-        </article>
-        {% endfor %}
-      </div>
+          <ul class="filter-list">
+            {% for item in featured_categories %}
+            <li><a href="/products">{{ item }}</a></li>
+            {% endfor %}
+            <li><a class="see-all" href="/products">See all</a></li>
+          </ul>
+        </div>
+
+        <div class="filter-block">
+          <div class="filter-title-row">
+            <h3>Brands</h3>
+            <span>&#709;</span>
+          </div>
+          <div class="option-list">
+            {% for item in brands %}
+            <label class="option-row">
+              <input type="checkbox" {% if item in ["Samsung", "Apple", "Pocco"] %}checked{% endif %} />
+              <span>{{ item }}</span>
+            </label>
+            {% endfor %}
+            <a class="see-all" href="/products">See all</a>
+          </div>
+        </div>
+
+        <div class="filter-block">
+          <div class="filter-title-row">
+            <h3>Features</h3>
+            <span>&#709;</span>
+          </div>
+          <div class="option-list">
+            {% for item in features %}
+            <label class="option-row">
+              <input type="checkbox" {% if loop.first %}checked{% endif %} />
+              <span>{{ item }}</span>
+            </label>
+            {% endfor %}
+            <a class="see-all" href="/products">See all</a>
+          </div>
+        </div>
+
+        <div class="filter-block">
+          <div class="filter-title-row">
+            <h3>Price range</h3>
+            <span>&#709;</span>
+          </div>
+          <div class="price-widget">
+            <div class="range-line">
+              <span class="range-active"></span>
+              <span class="range-thumb range-thumb-left"></span>
+              <span class="range-thumb range-thumb-right"></span>
+            </div>
+            <div class="price-inputs">
+              <label>
+                <span>Min</span>
+                <input type="text" placeholder="0" />
+              </label>
+              <label>
+                <span>Max</span>
+                <input type="text" placeholder="999999" />
+              </label>
+            </div>
+            <button class="btn btn-ghost price-apply" type="button">Apply</button>
+          </div>
+        </div>
+
+        <div class="filter-block">
+          <div class="filter-title-row">
+            <h3>Condition</h3>
+            <span>&#709;</span>
+          </div>
+          <div class="option-list">
+            {% for item in conditions %}
+            <label class="option-row">
+              <input type="radio" name="condition" {% if loop.first %}checked{% endif %} />
+              <span>{{ item }}</span>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="filter-block">
+          <div class="filter-title-row">
+            <h3>Ratings</h3>
+            <span>&#709;</span>
+          </div>
+          <div class="option-list">
+            {% for item in ratings %}
+            <label class="option-row option-row-stars">
+              <input type="checkbox" {% if item in [4, 3] %}checked{% endif %} />
+              <span class="listing-stars">
+                {% for star in range(5) %}
+                <span class="{% if star < item %}filled{% endif %}">&#9733;</span>
+                {% endfor %}
+              </span>
+            </label>
+            {% endfor %}
+          </div>
+        </div>
+      </aside>
+
+      <section class="listing-main">
+        <div class="listing-toolbar">
+          <p>{{ all_products|length }} items in <strong>Products</strong></p>
+          <div class="toolbar-actions">
+            <label class="option-row compact-option">
+              <input type="checkbox" />
+              <span>Verified only</span>
+            </label>
+            <button type="button" class="toolbar-chip">Featured <span>&#709;</span></button>
+            <div class="view-toggle">
+              <button type="button" class="is-active">&#9638;</button>
+              <button type="button">&#9776;</button>
+            </div>
+          </div>
+        </div>
+
+        {% if active_filters %}
+        <div class="active-filter-bar">
+          {% if query %}
+          <span class="filter-pill">{{ query }} <a href="/products{% if category %}?category={{ category }}{% endif %}">&#10005;</a></span>
+          {% endif %}
+          {% if category %}
+          <span class="filter-pill">{{ category }} <a href="/products{% if query %}?q={{ query }}{% endif %}">&#10005;</a></span>
+          {% endif %}
+          <a class="clear-link" href="/products">Clear all filter</a>
+        </div>
+        {% endif %}
+
+        {% if products %}
+        <div class="listing-grid">
+          {% for item in products %}
+          <article class="listing-card">
+            <a class="listing-image" href="/products/{{ item.id }}">
+              <img src="{{ item.image }}" alt="{{ item.name }}" />
+            </a>
+            <div class="listing-card-body">
+              <div class="listing-card-head">
+                <div>
+                  <div class="listing-price-row">
+                    <strong>${{ "%.2f"|format(item.price) }}</strong>
+                    <button type="button" class="wish-btn">&#9825;</button>
+                  </div>
+                  <span class="listing-old-price">${{ "%.2f"|format(item.old_price) }}</span>
+                </div>
+              </div>
+              <div class="listing-rating-row">
+                <span class="listing-stars">
+                  {% for star in range(5) %}
+                  <span class="{% if star < 4 %}filled{% endif %}">&#9733;</span>
+                  {% endfor %}
+                </span>
+                <span class="listing-rating-value">{{ "%.1f"|format(item.rating) }}</span>
+              </div>
+              <a class="listing-name" href="/products/{{ item.id }}">{{ item.name }}</a>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+        {% else %}
+        <div class="empty-state">No products found for your current filters.</div>
+        {% endif %}
+
+        <div class="pagination-row">
+          <div class="toolbar-chip">Show 10 <span>&#709;</span></div>
+          <div class="pagination">
+            <a class="page-arrow {% if active_page == 1 %}is-disabled{% endif %}" href="/products?page={{ active_page - 1 if active_page > 1 else 1 }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category }}{% endif %}">&lt;</a>
+            {% for page_number in page_numbers %}
+            <a class="page-link {% if page_number == active_page %}is-active{% endif %}" href="/products?page={{ page_number }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category }}{% endif %}">{{ page_number }}</a>
+            {% endfor %}
+            <a class="page-arrow {% if active_page == total_pages %}is-disabled{% endif %}" href="/products?page={{ active_page + 1 if active_page < total_pages else total_pages }}{% if query %}&q={{ query }}{% endif %}{% if category %}&category={{ category }}{% endif %}">&gt;</a>
+          </div>
+        </div>
+      </section>
     </section>
   </main>
 
