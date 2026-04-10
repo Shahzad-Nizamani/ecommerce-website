@@ -1,0 +1,110 @@
+@media (max-width: 1024px) {
+  .top-row {
+    grid-template-columns: 1fr;
+  }
+
+  .quick-actions {
+    justify-content: flex-start;
+  }
+
+  .hero-home,
+  .deal-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .market-detail-card,
+  .detail-lower-grid,
+  .listing-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .seller-card {
+    max-width: none;
+  }
+
+  .deal-copy {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .deal-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .listing-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 680px) {
+  .sub-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .nav-links {
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .hero,
+  .market-detail-card,
+  .description-body,
+  .related-card {
+    padding: 14px;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .btn,
+  .btn-ghost {
+    text-align: center;
+  }
+
+  .product-grid,
+  .listing-grid,
+  .deal-grid,
+  .tier-pricing,
+  .related-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .meta-row,
+  .similar-item {
+    grid-template-columns: 1fr;
+  }
+
+  .detail-actions,
+  .discount-banner {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .detail-btn,
+  .icon-btn,
+  .banner-btn {
+    width: 100%;
+  }
+
+  .listing-toolbar,
+  .pagination-row {
+    justify-content: stretch;
+  }
+
+  .toolbar-actions,
+  .pagination {
+    width: 100%;
+  }
+}
