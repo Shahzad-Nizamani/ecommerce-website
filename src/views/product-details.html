@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ShopSphere | Product Details</title>
+  <title>Brand | Product Details</title>
   <link rel="stylesheet" href="/public/css/styles.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="top-row">
-      <a class="brand" href="/">ShopSphere</a>
+      <a class="brand" href="/">Brand</a>
       <form class="search-wrap" action="/products" method="get">
         <input type="text" name="q" placeholder="Search products" aria-label="Search products" />
         <button type="submit" class="btn">Search</button>
@@ -90,7 +90,7 @@
         <div class="meta-grid">
           <div class="meta-row">
             <span>Price:</span>
-            <strong>Negotiable</strong>
+            <strong>${{ "%.2f"|format(product.price) }}</strong>
           </div>
           <div class="meta-row">
             <span>Type:</span>
@@ -194,23 +194,6 @@
           {% endfor %}
         </div>
       </aside>
-    </section>
-
-    <section class="related-card">
-      <div class="section-head related-head">
-        <h2>Related products</h2>
-      </div>
-      <div class="related-grid">
-        {% for item in related_products %}
-        <a class="related-item" href="/products/{{ item.id }}">
-          <div class="related-thumb">
-            <img src="{{ item.image }}" alt="{{ item.name }}" />
-          </div>
-          <strong>{{ item.name }}</strong>
-          <span>{{ item.price_range }}</span>
-        </a>
-        {% endfor %}
-      </div>
     </section>
 
     <section class="discount-banner">

@@ -3,46 +3,46 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ShopSphere | Products</title>
+  <title>Brand | Products</title>
   <link rel="stylesheet" href="/public/css/styles.css" />
 </head>
 <body>
   <header class="site-header">
     <div class="top-row">
-      <a class="brand" href="/">Brand</a>
+      <a class="brand" href="/" aria-label="Brand home">
+        <span class="brand-mark" aria-hidden="true">&#128717;</span>
+        <span class="brand-text">Brand</span>
+      </a>
       <form class="search-wrap" action="/products" method="get">
-        <input type="text" name="q" value="{{ query }}" placeholder="Search" aria-label="Search products" />
+        <input type="text" name="q" value="{{ query }}" placeholder="Search products" aria-label="Search products" />
         <button type="submit" class="btn">Search</button>
       </form>
       <div class="quick-actions">
-        <a class="ghost-action" href="/products">Add Product</a>
         <a href="/">Profile</a>
-        <a href="/products">Message</a>
         <a href="/products">Orders</a>
         <a href="/products">My cart</a>
       </div>
     </div>
     <div class="sub-row">
       <nav class="nav-links">
-        <a href="/products">All category</a>
+        <a href="/products"><span class="menu-icon" aria-hidden="true">&#9776;</span> All category</a>
         <a href="/products">Hot offers</a>
         <a href="/products">Gift boxes</a>
-        <a href="/products">Projects</a>
+        <a href="/products">Products</a>
         <a href="/products">Menu item</a>
-        <a href="/products">Help</a>
       </nav>
-      <p class="shipping">English, USD | Ship to Germany</p>
+      <p class="shipping">Ship to: Global</p>
     </div>
   </header>
 
   <main class="container">
     <nav class="breadcrumbs" aria-label="Breadcrumb">
       <a href="/">Home</a>
-      <span>/</span>
+      <span>&#8250;</span>
       <a href="/products">Clothings</a>
-      <span>/</span>
+      <span>&#8250;</span>
       <a href="/products">Men's wear</a>
-      <span>/</span>
+      <span>&#8250;</span>
       <strong>Summer clothing</strong>
     </nav>
 
