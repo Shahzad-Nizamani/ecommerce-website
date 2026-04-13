@@ -11,6 +11,7 @@ app = FastAPI(title="Ecommerce Backend")
 
 cors_origins_env = os.getenv("CORS_ORIGINS", "")
 allowed_origins = [origin.strip() for origin in cors_origins_env.split(",") if origin.strip()]
+cors_origin_regex = os.getenv("CORS_ORIGIN_REGEX", r"https://.*\.vercel\.app")
 
 if not allowed_origins:
 	allowed_origins = [
@@ -22,6 +23,7 @@ if not allowed_origins:
 app.add_middleware(
 	CORSMiddleware,
 	allow_origins=allowed_origins,
+	allow_origin_regex=cors_origin_regex,
 	allow_credentials=True,
 	allow_methods=["*"],
 	allow_headers=["*"],

@@ -8,13 +8,16 @@ templates = Jinja2Templates(directory="src/views")
 
 
 @router.get("/featured_products")
+@router.get("/api/featured_products")
 def get_featured_products(request: Request):
 	return featured_products()
 
 @router.get("/products_by_type/{type}")
+@router.get("/api/products_by_type/{type}")
 def get_products_by_type(request: Request, type: str):
 	return products_by_type(type=type)
 
 @router.get("/recommended_products")
+@router.get("/api/recommended_products")
 def get_recommended_products(request: Request):
 	return recomended_products()
