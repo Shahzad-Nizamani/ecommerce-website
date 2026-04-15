@@ -42,7 +42,7 @@ def get_categories():
     db_session = SessionLocal()
     try:
         result = db_session.execute(
-            text("SELECT DISTINCT category FROM products WHERE category IS NOT NULL ORDER BY category")
+            text("SELECT DISTINCT category from products WHERE category IS NOT NULL ORDER BY category")
         ).fetchall()
         return [row[0] for row in result]
     finally:
