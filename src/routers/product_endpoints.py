@@ -4,6 +4,7 @@ from fastapi import APIRouter, HTTPException, Request
 from fastapi.templating import Jinja2Templates
 
 from src.database.product_queries import get_all_products, get_single_product
+from src.database.home_queries import search_products
 
 router = APIRouter()
 templates = Jinja2Templates(directory="src/views")
@@ -61,19 +62,21 @@ def _to_product_dict(item):
 
 @router.get("/products")
 def product_listing(request: Request):
-	all_products = [_to_product_dict(item) for item in get_all_products()]
 	q = (request.query_params.get("q") or "").strip().lower()
 	category = (request.query_params.get("category") or "").strip().lower()
 	page = max(int(request.query_params.get("page") or 1), 1)
 	page_size = 6
 
+	if q:
+		raw_products = search_products(keyword=q)
+	else:
+		raw_products = get_all_products()
+
+	all_products = [_to_product_dict(item) for item in raw_products]
+
 	filtered_products = [
-		item
-		for item in all_products
-		if (
-			(not q or q in item["name"].lower() or q in item["category"].lower())
-			and (not category or item["category"].lower() == category)
-		)
+		item for item in all_products
+		if not category or item["category"].lower() == category
 	]
 
 	total_pages = max(1, ceil(len(filtered_products) / page_size)) if filtered_products else 1

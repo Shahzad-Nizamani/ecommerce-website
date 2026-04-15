@@ -43,3 +43,28 @@ def products_by_type(type: str, limit: int = 4):
         return []
     finally:
         db_session.close()
+
+def search_products(keyword: str):
+    db_session = SessionLocal()
+    try:
+        normalized_keyword = keyword.strip().lower()
+        search_term = f"%{normalized_keyword}%"
+        result = db_session.execute(
+            text(
+                """
+                SELECT id, name, image, price, category
+                FROM products
+                WHERE LOWER(name) LIKE :keyword
+                   OR LOWER(category) LIKE :keyword
+                ORDER BY name ASC
+               
+                """
+            ),
+            {"keyword": search_term},
+        ).mappings()
+        return list(result)
+    except Exception as e:
+        print(f"Error searching products: {e}")
+        return []
+    finally:
+        db_session.close()
