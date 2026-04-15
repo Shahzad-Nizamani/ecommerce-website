@@ -7,19 +7,19 @@ router = APIRouter()
 templates = Jinja2Templates(directory="src/views")
 
 
-@router.get("/api/featured_products")
+@router.get("/featured_products")
 def get_featured_products():
 	return featured_products()
 
-@router.get("/api/products_by_type/{type}")
+@router.get("/products_by_type/{type}")
 def get_products_by_type(type: str):
 	return products_by_type(type=type)
 
-@router.get("/api/recommended_products")
+@router.get("/recommended_products")
 def get_recommended_products():
 	return recomended_products()
 
-@router.get("/api/search")
+@router.get("/search")
 def api_search_products(q: str = Query(...), limit: int = Query(20)):
 	q = q.strip()
 	normalized_query = q.lower()
