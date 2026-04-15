@@ -1,6 +1,7 @@
-from fastapi import APIRouter, Request, Query
+from fastapi import APIRouter, Query
 from fastapi.templating import Jinja2Templates
-
+from sqlalchemy import text
+from src.database.db_config import SessionLocal
 from src.database.home_queries import featured_products, recomended_products, products_by_type, search_products
 
 router = APIRouter()
@@ -35,3 +36,14 @@ def api_search_products(q: str = Query(...), limit: int = Query(20)):
 		"query": q,
 		"products": products,
 	}
+
+@router.get("/categories")
+def get_categories():
+    db_session = SessionLocal()
+    try:
+        result = db_session.execute(
+            text("SELECT DISTINCT category FROM products WHERE category IS NOT NULL ORDER BY category")
+        ).fetchall()
+        return [row[0] for row in result]
+    finally:
+        db_session.close()

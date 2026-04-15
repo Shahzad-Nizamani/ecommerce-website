@@ -44,23 +44,32 @@ def products_by_type(type: str, limit: int = 4):
     finally:
         db_session.close()
 
-def search_products(keyword: str):
+def search_products(keyword: str, category: str = None):
     db_session = SessionLocal()
     try:
         normalized_keyword = keyword.strip().lower()
         search_term = f"%{normalized_keyword}%"
+        
+        # Base query
+        query = """
+            SELECT id, name, image, price, category
+            FROM products
+            WHERE (LOWER(name) LIKE :keyword
+               OR LOWER(category) LIKE :keyword)
+        """
+        
+        params = {"keyword": search_term}
+        
+        # Add category filter if provided and not "All category"
+        if category and category.lower() != "all category":
+            query += " AND LOWER(category) = :category"
+            params["category"] = category.strip().lower()
+        
+        query += " ORDER BY name ASC"
+        
         result = db_session.execute(
-            text(
-                """
-                SELECT id, name, image, price, category
-                FROM products
-                WHERE LOWER(name) LIKE :keyword
-                   OR LOWER(category) LIKE :keyword
-                ORDER BY name ASC
-               
-                """
-            ),
-            {"keyword": search_term},
+            text(query),
+            params,
         ).mappings()
         return list(result)
     except Exception as e:

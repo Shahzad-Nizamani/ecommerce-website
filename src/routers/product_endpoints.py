@@ -68,16 +68,18 @@ def product_listing(request: Request):
 	page_size = 6
 
 	if q:
-		raw_products = search_products(keyword=q)
+		# Search by keyword, optionally filtered by category
+		raw_products = search_products(keyword=q, category=category if category else None)
 	else:
 		raw_products = get_all_products()
 
 	all_products = [_to_product_dict(item) for item in raw_products]
 
+	# Additional client-side filtering only if we got all products (no search)
 	filtered_products = [
 		item for item in all_products
 		if not category or item["category"].lower() == category
-	]
+	] if not q else all_products
 
 	total_pages = max(1, ceil(len(filtered_products) / page_size)) if filtered_products else 1
 	active_page = min(page, total_pages)
