@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brand | Add Product</title>
+  <link rel="stylesheet" href="/public/css/styles.css" />
+  <style>
+    .admin-container {
+      max-width: 600px;
+      margin: 30px auto;
+      padding: 30px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      background: #f9f9f9;
+    }
+
+    .admin-container h2 {
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      font-size: 14px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      outline: none;
+      border-color: #007bff;
+      box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .btn-submit {
+      padding: 12px 30px;
+      background: #28a745;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-submit:hover {
+      background: #218838;
+    }
+
+    .btn-back {
+      padding: 12px 30px;
+      background: #6c757d;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      margin-right: 10px;
+      transition: background 0.3s;
+    }
+
+    .btn-back:hover {
+      background: #5a6268;
+    }
+
+    .error {
+      background: #f8d7da;
+      color: #721c24;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      border: 1px solid #f5c6cb;
+    }
+
+    .success {
+      background: #d4edda;
+      color: #155724;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      border: 1px solid #c3e6cb;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+      margin-top: 30px;
+    }
+
+    @media (max-width: 600px) {
+      .form-row {
+        grid-template-columns: 1fr;
+      }
+
+      .admin-container {
+        margin: 10px;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="top-row">
+      <a class="brand" href="/" aria-label="Brand home">
+        <span class="brand-mark" aria-hidden="true">&#128717;</span>
+        <span class="brand-text">Brand</span>
+      </a>
+      <div class="quick-actions">
+        <span>Welcome, {{ username }}!</span>
+        <a href="/auth/logout">Logout</a>
+        <a href="/admin/products">Manage Products</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="admin-container">
+      <h2>Add New Product</h2>
+
+      {% if error %}
+      <div class="error">{{ error }}</div>
+      {% endif %}
+
+      {% if success %}
+      <div class="success">{{ success }}</div>
+      {% endif %}
+
+      <form method="post" action="/admin/add-product" enctype="multipart/form-data">
+        <div class="form-group">
+          <label for="name">Product Name *</label>
+          <input type="text" id="name" name="name" required />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="price">Price ($) *</label>
+            <input type="number" id="price" name="price" step="0.01" min="0" required />
+          </div>
+
+          <div class="form-group">
+            <label for="stock">Stock Quantity *</label>
+            <input type="number" id="stock" name="stock" min="0" required />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category *</label>
+          <input type="text" id="category" name="category" placeholder="e.g., Electronics, Clothing, etc." required />
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <textarea id="description" name="description" placeholder="Enter product description..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="image">Image URL</label>
+          <input type="text" id="image" name="image" placeholder="https://example.com/image.jpg" />
+        </div>
+
+        <div class="button-group">
+          <button type="submit" class="btn-submit">Add Product</button>
+          <a href="/admin/products" class="btn-back">Back to Products</a>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <footer style="text-align: center; padding: 20px; color: #666; margin-top: 50px;">
+    <p>&copy; 2024 Brand. All rights reserved.</p>
+  </footer>
+</body>
+</html>

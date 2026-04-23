@@ -1,5 +1,6 @@
 from src.database.db_config import Base
-from sqlalchemy import Column, Integer, String, text, Numeric
+from sqlalchemy import Column, Integer, String, Text, Numeric
+
 
 class Product(Base):
     __tablename__ = "products"
@@ -9,5 +10,5 @@ class Product(Base):
     price = Column(Numeric, nullable=False)
     category = Column(String, nullable=False, index=True)
     image = Column(String)
-    description = Column(text)
+    description = Column(Text)
     stock = Column(Integer, nullable=False)

@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
-from src.routers import home_endpoints, product_endpoints
+from src.routers import home_endpoints, product_endpoints, auth_endpoints, admin_endpoints
 
 app = FastAPI(title="Ecommerce Backend")
 
@@ -40,3 +40,5 @@ def root():
 
 app.include_router(home_endpoints.router)
 app.include_router(product_endpoints.router)
+app.include_router(auth_endpoints.router)
+app.include_router(admin_endpoints.router)
